@@ -12,6 +12,7 @@
     "@hono/vite-dev-server": "^0.25.1",
     "@types/bun": "latest",
     "hono": "^4.12.12",
+    "oxfmt": "^0.44.0",
     "vite": "^8.0.8",
     "vite-plugin-solid": "^2.11.12"
   },
