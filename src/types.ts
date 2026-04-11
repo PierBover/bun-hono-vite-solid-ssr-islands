@@ -1,11 +1,11 @@
 import 'hono';
-import type { Component } from "solid-js";
+import type { JSXElement } from "solid-js";
+
 
 declare module 'hono' {
 	interface Context {
 		renderSolidPage: (
-			SolidComponent:Component,
-			props?: Record<string, any>
+			jsxElement:JSXElement
 		) => Promise<Response>;
 	}
 }

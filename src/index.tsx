@@ -18,8 +18,8 @@ if (isProd) {
 
 app.get(
 	'/',
-	async (c) => {
-		return c.renderSolidPage(Page);
+	(c) => {
+		return c.renderSolidPage(<Page message='Hello Solid SSR'/>);
 	}
 );
 

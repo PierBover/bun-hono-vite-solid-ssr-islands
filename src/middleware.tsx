@@ -4,11 +4,9 @@ import {renderToString} from "solid-js/web";
 
 export const renderSolidPage = createMiddleware(async (c, next) => {
 
-	c.renderSolidPage = async (SolidComponent, props = {}) => {
+	c.renderSolidPage = async (jsxElement) => {
 
-		const solidHtml = renderToString(() => {
-			return <SolidComponent {...props} />;
-		});
+		const solidHtml = renderToString(() => jsxElement);
 
 		return c.html(html`
 			<!DOCTYPE html>

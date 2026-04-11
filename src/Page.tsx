@@ -1,6 +1,10 @@
-function Page () {
+type Props = {
+	message:string;
+}
+
+function Page (props:Props) {
 	return (
-		<h1>Hello Solid SSR</h1>
+		<h1>{props.message}</h1>
 	);
 }
 
