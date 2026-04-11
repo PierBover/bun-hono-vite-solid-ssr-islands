@@ -1,10 +1,36 @@
-type Props = {
-	message:string;
-}
+import { Island } from './Island';
+import Counter from './islands/Counter';
+import CurrentTime from './islands/CurrentTime';
 
-function Page (props:Props) {
+type Props = {
+	message: string;
+};
+
+function Page(props: Props) {
+	const time = new Date().toISOString();
+
 	return (
-		<h1>{props.message}</h1>
+		<div class="Page">
+			<h1>{props.message}</h1>
+			<Island component={CurrentTime} name="CurrentTime" islandProps={{ serverTime: time }} />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<Island component={Counter} name="Counter" hydrateOnVisible />
+		</div>
 	);
 }
 

@@ -5,6 +5,7 @@
     "": {
       "name": "bun-hono-vite-solid-ssr-islands",
       "dependencies": {
+        "devalue": "^5.7.1",
         "solid-js": "^1.9.12",
       },
       "devDependencies": {
