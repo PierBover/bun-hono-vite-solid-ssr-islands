@@ -1,11 +1,15 @@
 import {Hono} from 'hono';
 import {compress} from 'hono/compress';
 import {serveStatic} from 'hono/bun';
+import Page from './Page';
+import {renderSolidPage} from './middleware';
 
 const isDev = import.meta.env.DEV;
 const isProd = import.meta.env.PROD;
 
 const app = new Hono();
+
+app.use('*', renderSolidPage);
 
 if (isProd) {
 	app.use('*', compress());
@@ -15,8 +19,8 @@ if (isProd) {
 app.get(
 	'/',
 	async (c) => {
-		return c.body('Hello Hono!');
+		return c.renderSolidPage(Page);
 	}
 );
 
-export default app
+export default app;

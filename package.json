@@ -3,11 +3,22 @@
   "module": "index.ts",
   "type": "module",
   "private": true,
+  "scripts": {
+    "dev": "bunx --bun vite",
+    "build": "rm -rf dist && bunx --bun vite build && bunx --bun vite build --ssr",
+    "start": "NODE_ENV=production bun dist/server/index.js"
+  },
   "devDependencies": {
+    "@hono/vite-dev-server": "^0.25.1",
     "@types/bun": "latest",
-    "hono": "^4.12.12"
+    "hono": "^4.12.12",
+    "vite": "^8.0.8",
+    "vite-plugin-solid": "^2.11.12"
   },
   "peerDependencies": {
     "typescript": "^5"
+  },
+  "dependencies": {
+    "solid-js": "^1.9.12"
   }
 }
