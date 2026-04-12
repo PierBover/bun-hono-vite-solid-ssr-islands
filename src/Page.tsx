@@ -12,8 +12,8 @@ function Page(props: Props) {
 	return (
 		<div class="Page">
 			<h1>{props.message}</h1>
-			<Island component={CurrentTime} name="CurrentTime" islandProps={{ serverTime: time }} />
-			<Island component={Counter} name="Counter" hydrateOnVisible />
+			<Island component={CurrentTime} islandProps={{ serverTime: time }} />
+			<Island component={Counter} hydrateOnVisible />
 		</div>
 	);
 }

@@ -15,7 +15,7 @@ const hydrationScript = generateHydrationScript();
 export const renderSolidPage = createMiddleware(async (c, next) => {
 	c.renderSolidPage = async (jsxElement) => {
 		const solidHtml = renderToString(() => jsxElement);
-		const hasIslands = solidHtml.includes('data-island-name');
+		const hasIslands = solidHtml.includes('data-island-path');
 
 		let islandsEntry = '';
 

@@ -1,6 +1,22 @@
 import { stringify } from 'devalue';
-import { Show, type Component } from 'solid-js';
+import { type Component } from 'solid-js';
 import { renderToString } from 'solid-js/web';
+
+// islands registry lookup table
+// we need this because we can't be certain of the component name after build
+// and we need that name to be able to provide a module path for hydration
+const registry = new Map<Component<any>, string>();
+// import and map all the modules of the islands components
+const modules = import.meta.glob('/src/islands/**/*.tsx', { eager: true });
+for (const [path, module] of Object.entries(modules)) {
+	if ((module as any).default) {
+		registry.set((module as any).default, path);
+	}
+}
+// this return the path of the component
+function getComponentPath(component: Component<any>): string | undefined {
+	return registry.get(component);
+}
 
 // we need all this TS stuff to infer the types of the props for islandProps
 type ComponentProps<T> = T extends (props: infer P) => any ? P : never;
@@ -8,14 +24,12 @@ type ComponentProps<T> = T extends (props: infer P) => any ? P : never;
 type IslandProps<T extends Component<any>> = keyof ComponentProps<T> extends never
 	? {
 			component: T;
-			name: string;
 			islandProps?: never;
 			clientOnly?: boolean;
 			hydrateOnVisible?: boolean;
 		}
 	: {
 			component: T;
-			name: string;
 			islandProps: ComponentProps<T>;
 			clientOnly?: boolean;
 			hydrateOnVisible?: boolean;
@@ -26,7 +40,7 @@ export function Island<T extends Component<any>>(props: IslandProps<T>) {
 	const jsonProps = props.islandProps ? stringify(props.islandProps) : undefined;
 
 	let solidHtml = '';
-	const renderId = `${props.name}-${Math.random().toString(36).slice(2)}`;
+	const renderId = Math.random().toString(36).slice(2);
 
 	if (!props.clientOnly) {
 		if (props.islandProps) {
@@ -38,7 +52,7 @@ export function Island<T extends Component<any>>(props: IslandProps<T>) {
 
 	return (
 		<div
-			data-island-name={props.name}
+			data-island-path={getComponentPath(ComponentToRender)}
 			data-props={jsonProps}
 			data-render-id={renderId}
 			data-client-only={props.clientOnly}

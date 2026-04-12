@@ -3,17 +3,17 @@
 import { parse } from 'devalue';
 import { hydrate, render } from 'solid-js/web';
 
-const modules = import.meta.glob('./islands/*.tsx');
+const modules = import.meta.glob('/src/islands/**/*.tsx');
 
 async function hydrateIsland(element: HTMLElement) {
-	const componentName = element.getAttribute('data-island-name');
+	const islandPath = element.getAttribute('data-island-path');
 	const renderId = element.getAttribute('data-render-id')!;
 	const propsString = element.getAttribute('data-props');
 	const props = propsString ? parse(propsString) : {};
 
 	//console.log('hydrating...', componentName, renderId);
 
-	const importFunction = modules[`./islands/${componentName}.tsx`];
+	const importFunction = modules[islandPath!];
 
 	if (importFunction) {
 		const clientOnly = element.getAttribute('data-client-only') === 'true';
@@ -29,12 +29,12 @@ async function hydrateIsland(element: HTMLElement) {
 }
 
 const elements = document.querySelectorAll(
-	'[data-island-name]:not([data-hydrate-on-visible])',
+	'[data-island-path]:not([data-hydrate-on-visible])',
 ) as NodeListOf<HTMLElement>;
 for (const element of elements) hydrateIsland(element);
 
 const elementsToObserve = document.querySelectorAll(
-	'[data-island-name][data-hydrate-on-visible]',
+	'[data-island-path][data-hydrate-on-visible]',
 ) as NodeListOf<HTMLElement>;
 
 if (elementsToObserve.length > 0) {
