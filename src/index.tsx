@@ -4,6 +4,10 @@ import { serveStatic } from 'hono/bun';
 import Page from './Page';
 import { renderSolidPage } from './middleware';
 
+// CSS
+import './css/index.css';
+import.meta.glob('./css/components/**/*.css', { eager: true });
+
 const isDev = import.meta.env.DEV;
 const isProd = import.meta.env.PROD;
 

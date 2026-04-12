@@ -1,0 +1,8 @@
+.Page {
+	width: 30rem;
+	margin: 0 auto;
+
+	h1 {
+		color: blueviolet;
+	}
+}

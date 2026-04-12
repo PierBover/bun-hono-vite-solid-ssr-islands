@@ -20,7 +20,11 @@ function CurrentTime(props: Props) {
 		});
 	});
 
-	return <h3>The time is: {time()}</h3>;
+	return (
+		<div class="CurrentTime">
+			<h3>The time is: {time()}</h3>
+		</div>
+	);
 }
 
 export default CurrentTime;

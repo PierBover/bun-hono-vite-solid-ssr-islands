@@ -13,22 +13,6 @@ function Page(props: Props) {
 		<div class="Page">
 			<h1>{props.message}</h1>
 			<Island component={CurrentTime} name="CurrentTime" islandProps={{ serverTime: time }} />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
 			<Island component={Counter} name="Counter" hydrateOnVisible />
 		</div>
 	);
