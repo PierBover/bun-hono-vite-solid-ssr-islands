@@ -51,10 +51,3 @@ bun run dev      # Start Vite dev server
 bun run build    # Build client and server bundles
 bun run start    # Run production server
 ```
-
-## Build output
-
-Vite produces two separate builds:
-
-- `dist/client/` — Island JavaScript bundles and CSS, with a manifest for asset resolution
-- `dist/server/` — Server bundle (Hono app)
