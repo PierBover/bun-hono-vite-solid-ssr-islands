@@ -11,7 +11,7 @@ async function hydrateIsland(element: HTMLElement) {
 	const propsString = element.getAttribute('data-props');
 	const props = propsString ? parse(propsString) : {};
 
-	console.log('hydrating...', componentName, renderId);
+	//console.log('hydrating...', componentName, renderId);
 
 	const importFunction = modules[`./islands/${componentName}.tsx`];
 

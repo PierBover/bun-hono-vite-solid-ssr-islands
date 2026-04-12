@@ -5,8 +5,8 @@ import Page from './Page';
 import { renderSolidPage } from './middleware';
 
 // CSS
-import './css/index.css';
-import.meta.glob('./css/components/**/*.css', { eager: true });
+// this is only for dev
+import './css/index.ts';
 
 const isDev = import.meta.env.DEV;
 const isProd = import.meta.env.PROD;
