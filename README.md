@@ -22,26 +22,24 @@ A minimal custom metaframework proof of concept using Bun, Hono, Vite, and Solid
 
 ## How it works
 
-Pages are server-rendered with SolidJS. Most of the page is static HTML with zero JavaScript. Interactive parts are wrapped in an `<Island>` component that marks them for client-side hydration.
-
-The only gotcha is that islands need to pass the component name with `name="MyComponent"`. I couldn't find an elegant way to just get the component name from a Solid component.
+Pages are server-rendered with SolidJS. Interactive parts are wrapped in an `<Island>` component that creates the enecessary makrup for client-side hydration.
 
 ### Island features
 
-- **SSR + hydration** — Server-renders the component, then hydrates on the client
-- **Client-only** — Skips server rendering, mounts from scratch on the client
-- **Hydrate on visible** — Defers hydration until the element enters the viewport (Intersection Observer)
-- **Typed props** — Island props are inferred from the component's prop types
+- Islands can be rendered only client-side with the `clientOnly` prop
+- Hydration or client-only mounting can be deferred until the element enters the viewport with the `hydrateOnVisible` prop
+- The prop `islandProps` infers the type from the `component` prop types
+- Using [`devalue`](https://github.com/sveltejs/devalue) for encoding/decoding hydration data instead of JSON to be able to include complex types like `Date` etc.
 
 ```tsx
 // SSR + hydration with typed props
-<Island component={CurrentTime} name="CurrentTime" islandProps={{ serverTime: time }} />
+<Island component={CurrentTime} islandProps={{ serverTime: time }} />
 
 // Client-only rendering
-<Island component={Counter} name="Counter" clientOnly />
+<Island component={Counter} clientOnly />
 
 // Deferred hydration when the DOM element becomes visible
-<Island component={Counter} name="Counter" hydrateOnVisible />
+<Island component={Counter} hydrateOnVisible />
 ```
 
 ## Scripts
