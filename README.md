@@ -22,11 +22,11 @@ A minimal custom metaframework proof of concept using Bun, Hono, Vite, and Solid
 
 ## How it works
 
-Pages are server-rendered with SolidJS. Interactive parts are wrapped in an `<Island>` component that creates the enecessary makrup for client-side hydration.
+Pages are server-rendered with SolidJS. Interactive parts are wrapped in an `<Island>` component that creates the enecessary markup for client-side hydration.
 
 ### Island features
 
-- Islands can be rendered only client-side with the `clientOnly` prop
+- Islands can be rendered exclusively on the client with the `clientOnly` prop (no SSR rendering)
 - Hydration or client-only mounting can be deferred until the element enters the viewport with the `hydrateOnVisible` prop
 - The prop `islandProps` infers the type from the `component` prop types
 - Using [`devalue`](https://github.com/sveltejs/devalue) for encoding/decoding hydration data instead of JSON to be able to include complex types like `Date` etc.
