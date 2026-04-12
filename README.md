@@ -1,6 +1,6 @@
 # bun-hono-vite-solid-ssr-islands
 
-A minimal custom metaframework proof of concept using Bun, Hono, Vite, and SolidJS with islands (partial hydration).
+A minimal custom metaframework (as the kids say) proof of concept using Bun, Hono, Vite, and SolidJS with islands (partial hydration).
 
 ## Project structure
 
