@@ -18,22 +18,22 @@ function getComponentPath(component: Component<any>): string | undefined {
 	return registry.get(component);
 }
 
+type CommonProps<T> = {
+	component: T;
+	clientOnly?: boolean;
+};
+
+type HydrationOptions =
+	| { hydrateOnVisible?: boolean; hydrateOnMedia?: never }
+	| { hydrateOnMedia?: string; hydrateOnVisible?: never };
+
+type BaseProps<T> = CommonProps<T> & HydrationOptions;
+
 // we need all this TS stuff to infer the types of the props for islandProps
 type ComponentProps<T> = T extends (props: infer P) => any ? P : never;
 
-type IslandProps<T extends Component<any>> = keyof ComponentProps<T> extends never
-	? {
-			component: T;
-			islandProps?: never;
-			clientOnly?: boolean;
-			hydrateOnVisible?: boolean;
-		}
-	: {
-			component: T;
-			islandProps: ComponentProps<T>;
-			clientOnly?: boolean;
-			hydrateOnVisible?: boolean;
-		};
+type IslandProps<T extends Component<any>> = BaseProps<T> &
+	(keyof ComponentProps<T> extends never ? { islandProps?: never } : { islandProps: ComponentProps<T> });
 
 export function Island<T extends Component<any>>(props: IslandProps<T>) {
 	const ComponentToRender = props.component;
@@ -57,6 +57,7 @@ export function Island<T extends Component<any>>(props: IslandProps<T>) {
 			data-render-id={renderId}
 			data-client-only={props.clientOnly}
 			data-hydrate-on-visible={props.hydrateOnVisible}
+			data-hydrate-on-media={props.hydrateOnMedia}
 			innerHTML={solidHtml}
 		></div>
 	);
