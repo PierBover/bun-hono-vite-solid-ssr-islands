@@ -1,4 +1,4 @@
-import { defineConfig, type OxcOptions } from 'vite';
+import { defineConfig } from 'vite';
 import devServer from '@hono/vite-dev-server';
 import bunAdapter from '@hono/vite-dev-server/bun';
 import solid from 'vite-plugin-solid';
