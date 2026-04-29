@@ -1,9 +1,9 @@
 {
-	"emmet.includeLanguages": {
-		"javascriptreact": "html",
-		"typescriptreact": "html"
-	},
-	"editor.defaultFormatter": "oxc.oxc-vscode",
+  "emmet.includeLanguages": {
+    "javascriptreact": "html",
+    "typescriptreact": "html"
+  },
+	"editor.defaultFormatter": "dprint.dprint",
 	"editor.formatOnSave": true,
 	"editor.formatOnSaveMode": "file"
 }

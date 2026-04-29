@@ -1,0 +1,17 @@
+{
+  "lineWidth": 100,
+  "useTabs": true,
+  "typescript": {
+    "quoteStyle": "preferSingle",
+    "semiColons": "always",
+    "trailingCommas": "never",
+    "jsx.quoteStyle": "preferDouble"
+  },
+  "excludes": [
+    "**/node_modules",
+    "**/*-lock.json"
+  ],
+  "plugins": [
+    "https://plugins.dprint.dev/typescript-0.95.15.wasm"
+  ]
+}
