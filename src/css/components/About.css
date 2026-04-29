@@ -1,0 +1,9 @@
+.About {
+	width: 30rem;
+	margin: 0 auto;
+	padding: 2rem 0 10rem;
+
+	h1 {
+		color: blueviolet;
+	}
+}

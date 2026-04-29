@@ -13,6 +13,7 @@ for (const [path, module] of Object.entries(modules)) {
 		registry.set((module as any).default, path);
 	}
 }
+
 // this return the path of the component
 function getComponentPath(component: Component<any>): string | undefined {
 	return registry.get(component);
@@ -46,7 +47,9 @@ export function Island<T extends Component<any>>(props: IslandProps<T>) {
 		if (props.islandProps) {
 			solidHtml = renderToString(() => <ComponentToRender {...props.islandProps} />, { renderId });
 		} else {
-			solidHtml = renderToString(() => <ComponentToRender />, { renderId });
+			solidHtml = renderToString(() => <ComponentToRender />, {
+				renderId
+			});
 		}
 	}
 

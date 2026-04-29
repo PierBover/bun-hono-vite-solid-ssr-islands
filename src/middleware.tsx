@@ -1,8 +1,10 @@
 import { file } from 'bun';
 import { createMiddleware } from 'hono/factory';
 import { html, raw } from 'hono/html';
-import { generateHydrationScript, renderToString } from 'solid-js/web';
+import { createComponent, generateHydrationScript, renderToString } from 'solid-js/web';
 import type { Manifest, ViteDevServer } from 'vite';
+import type { Component } from 'solid-js';
+import { HomeContext, RequestContext, type RequestContextValue } from './pages/pages-contexts';
 
 const isDev = import.meta.env.DEV;
 const isProd = import.meta.env.PROD;
@@ -13,8 +15,31 @@ const viteManifestJson = viteManifest ? (JSON.parse(viteManifest) as Manifest) :
 const hydrationScript = generateHydrationScript();
 
 export const renderSolidPage = createMiddleware(async (c, next) => {
-	c.renderSolidPage = async (jsxElement) => {
-		const solidHtml = renderToString(() => jsxElement);
+	c.renderSolidPage = async (pageComponent, contextWithValue) => {
+		// render the static HTML of the page with its context providers
+		const solidHtml = renderToString(() => {
+			const requestContextValue: RequestContextValue = {
+				path: c.req.path
+			};
+
+			return createComponent(RequestContext.Provider, {
+				value: requestContextValue,
+				get children() {
+					if (!contextWithValue) {
+						return createComponent(pageComponent, {});
+					} else {
+						const { context, value } = contextWithValue;
+						return createComponent(context.Provider, {
+							value,
+							get children() {
+								return createComponent(pageComponent, {});
+							}
+						});
+					}
+				}
+			});
+		});
+
 		const hasIslands = solidHtml.includes('data-island-path');
 
 		let islandsEntry = '';
@@ -28,7 +53,7 @@ export const renderSolidPage = createMiddleware(async (c, next) => {
 		const styleUrls: string[] = [];
 
 		if (isDev) {
-			const urls = await collectCssUrlsFromViteDevServer(c.env.vite, 'src/index.tsx');
+			const urls = await collectCssUrlsFromViteDevServer(c.env.vite, 'src/index.ts');
 			styleUrls.push(...urls);
 		} else {
 			// vite will always bundle all styles into this file
@@ -73,6 +98,7 @@ async function collectCssUrlsFromViteDevServer(viteServer: ViteDevServer, entryP
 	}
 
 	walk(module);
+
 	return cssUrls;
 }
 

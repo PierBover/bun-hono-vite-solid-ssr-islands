@@ -8,14 +8,14 @@ export default defineConfig(({ isSsrBuild }) => {
 		plugins: [
 			solid({ ssr: true }),
 			devServer({
-				entry: 'src/index.tsx',
+				entry: 'src/index.ts',
 				adapter: bunAdapter
 			})
 		],
 		build: {
 			cssCodeSplit: false,
 			rolldownOptions: {
-				input: isSsrBuild ? 'src/index.tsx' : ['src/islands-entry.tsx', 'src/css/index.ts'],
+				input: isSsrBuild ? 'src/index.ts' : ['src/islands-entry.tsx', 'src/css/index.ts'],
 				external: ['bun'],
 				output: {
 					minify: isSsrBuild

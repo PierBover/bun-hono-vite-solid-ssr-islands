@@ -1,4 +1,4 @@
-.Page {
+.Home {
 	width: 30rem;
 	margin: 0 auto;
 	padding: 2rem 0 10rem;
@@ -14,7 +14,7 @@
 }
 
 @media screen and (min-width: 1000px) {
-	.Page {
+	.Home {
 		.Desktop {
 			display: block;
 		}
@@ -22,7 +22,7 @@
 }
 
 @media screen and (max-width: 999px) {
-	.Page {
+	.Home {
 		.Mobile {
 			display: block;
 		}

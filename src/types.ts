@@ -1,11 +1,13 @@
 import 'hono';
-import type { JSXElement } from "solid-js";
+import type { Component, Context } from 'solid-js';
 
+export type ContextWithValue = {
+	context: Context<any>;
+	value: any;
+};
 
 declare module 'hono' {
 	interface Context {
-		renderSolidPage: (
-			jsxElement:JSXElement
-		) => Promise<Response>;
+		renderSolidPage: (pageComponent: Component, pageContextWithValue?: ContextWithValue) => Promise<Response>;
 	}
 }
