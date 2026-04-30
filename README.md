@@ -42,6 +42,16 @@ Pages are server-rendered with SolidJS. Interactive parts are wrapped in an `<Is
 <Island component={Counter} hydrateOnVisible />
 ```
 
+### Other features
+
+#### Link prefetch
+Add a `data-prefetch` attribute to link tags so that the URLs are preloaded. Prefetch will not happen in slow networks and the HTML is only cached in the browser for a couple of seconds.
+
+### Page contexts
+There are examples on how to [inject a Solid context into the SSR'd page](https://github.com/PierBover/bun-hono-vite-solid-ssr-islands/blob/main/src/index.ts#L36) to pass stuff like data from db queries, config settings, etc.
+
+There's also a [request context](https://github.com/PierBover/bun-hono-vite-solid-ssr-islands/blob/main/src/middleware.tsx#L21-L23) injected into all pages with stuff from the Hono context like the request path, session data, etc.
+
 ## Scripts
 
 ```bash
