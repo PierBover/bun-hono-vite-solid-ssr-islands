@@ -1,4 +1,4 @@
-import { createContext, type Context } from 'solid-js';
+import { type Context, createContext } from 'solid-js';
 
 export type RequestContextValue = {
 	path: string;

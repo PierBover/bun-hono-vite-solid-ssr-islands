@@ -1,10 +1,10 @@
+import { useContext } from 'solid-js';
+import Nav from '../components/Nav';
 import { Island } from '../Island';
 import Counter from '../islands/Counter';
 import CurrentTime from '../islands/CurrentTime';
 import Desktop from '../islands/Desktop';
 import Mobile from '../islands/Mobile';
-import Nav from '../components/Nav';
-import { useContext } from 'solid-js';
 import { HomeContext } from './pages-contexts';
 
 function Home() {

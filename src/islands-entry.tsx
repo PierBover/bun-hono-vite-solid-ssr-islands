@@ -21,7 +21,7 @@ async function hydrateIsland(element: HTMLElement) {
 
 	if (importFunction) {
 		const clientOnly = element.getAttribute('data-client-only') === 'true';
-		const module = (await importFunction()) as { default: any };
+		const module = (await importFunction()) as { default: any; };
 		const Component = module.default;
 		element.setAttribute('data-hydrated', 'true');
 
@@ -35,13 +35,13 @@ async function hydrateIsland(element: HTMLElement) {
 
 // hydrate immediately
 const elements = document.querySelectorAll(
-	'[data-island-path]:not([data-hydrate-on-visible]):not([data-hydrate-on-media])',
+	'[data-island-path]:not([data-hydrate-on-visible]):not([data-hydrate-on-media])'
 ) as NodeListOf<HTMLElement>;
 for (const element of elements) hydrateIsland(element);
 
 // hydrate on visible
 const elementsToHydrateOnVisible = document.querySelectorAll(
-	'[data-island-path][data-hydrate-on-visible]',
+	'[data-island-path][data-hydrate-on-visible]'
 ) as NodeListOf<HTMLElement>;
 
 if (elementsToHydrateOnVisible.length > 0) {
@@ -62,7 +62,7 @@ if (elementsToHydrateOnVisible.length > 0) {
 
 // hydrate on media query
 const elementsToHydrateOnMedia = document.querySelectorAll(
-	'[data-island-path][data-hydrate-on-media]',
+	'[data-island-path][data-hydrate-on-media]'
 ) as NodeListOf<HTMLElement>;
 
 for (const element of elementsToHydrateOnMedia) {
