@@ -55,6 +55,7 @@ export function Island<T extends Component<any>>(props: IslandProps<T>) {
 	}
 
 	return (
+		// dprint-ignore
 		<div
 			data-island-path={getComponentPath(ComponentToRender)}
 			data-props={jsonProps}
@@ -63,7 +64,6 @@ export function Island<T extends Component<any>>(props: IslandProps<T>) {
 			data-hydrate-on-visible={props.hydrateOnVisible}
 			data-hydrate-on-media={props.hydrateOnMedia}
 			innerHTML={solidHtml}
-		>
-		</div>
+		></div>
 	);
 }
