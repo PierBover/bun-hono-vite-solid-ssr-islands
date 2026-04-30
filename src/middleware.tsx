@@ -1,9 +1,9 @@
 import { file } from 'bun';
 import { createMiddleware } from 'hono/factory';
 import { html, raw } from 'hono/html';
+import type { Component } from 'solid-js';
 import { createComponent, generateHydrationScript, renderToString } from 'solid-js/web';
 import type { Manifest, ViteDevServer } from 'vite';
-import type { Component } from 'solid-js';
 import { HomeContext, RequestContext, type RequestContextValue } from './pages/pages-contexts';
 
 const isDev = import.meta.env.DEV;
@@ -42,12 +42,14 @@ export const renderSolidPage = createMiddleware(async (c, next) => {
 
 		const hasIslands = solidHtml.includes('data-island-path');
 
-		let islandsEntry = '';
+		let islandsEntry = '', clientEntry = '';
 
 		if (isDev) {
 			islandsEntry = '<script type="module" src="src/islands-entry.tsx"></script>';
+			clientEntry = '<script type="module" src="src/client-entry.ts"></script>';
 		} else {
 			islandsEntry = `<script type="module" src="${viteManifestJson!['src/islands-entry.tsx']!.file}"></script>`;
+			clientEntry = `<script type="module" src="${viteManifestJson!['src/client-entry.ts']!.file}"></script>`;
 		}
 
 		const styleUrls: string[] = [];
@@ -68,6 +70,7 @@ export const renderSolidPage = createMiddleware(async (c, next) => {
 				<head>
 					${isDev && raw('<script type="module" src="/@vite/client"></script>')}
 					${hasIslands && raw(hydrationScript)} ${hasIslands && raw(islandsEntry)}
+					${raw(clientEntry)}
 					${raw(styleUrls.map((url) => `<link href="${url}" rel="stylesheet"/>`).join(''))}
 					${isProd && raw(getJsPreloadTagsFromManifest())}
 				</head>
@@ -108,5 +111,6 @@ function getJsPreloadTagsFromManifest() {
 		.map((key) => viteManifestJson[key]!.file)
 		.filter((file) => file.endsWith('.js'));
 	const uniqueFiles = Array.from(new Set(allFiles));
-	return uniqueFiles.map((file) => `<link rel="modulepreload" href="/${file}" fetchpriority="low">`).join('');
+	return uniqueFiles.map((file) => `<link rel="modulepreload" href="/${file}" fetchpriority="low">`)
+		.join('');
 }

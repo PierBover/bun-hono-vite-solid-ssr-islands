@@ -6,8 +6,8 @@ function Nav() {
 
 	return (
 		<nav class="Nav">
-			{path === '/' ? <span>Home</span> : <a href="/">Home</a>}
-			{path === '/about' ? <span>About</span> : <a href="/about">About</a>}
+			{path === '/' ? <span>Home</span> : <a href="/" data-prefetch>Home</a>}
+			{path === '/about' ? <span>About</span> : <a href="/about" data-prefetch>About</a>}
 		</nav>
 	);
 }

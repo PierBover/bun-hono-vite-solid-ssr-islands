@@ -1,6 +1,6 @@
-import { defineConfig } from 'vite';
 import devServer from '@hono/vite-dev-server';
 import bunAdapter from '@hono/vite-dev-server/bun';
+import { defineConfig } from 'vite';
 import solid from 'vite-plugin-solid';
 
 export default defineConfig(({ isSsrBuild }) => {
@@ -15,16 +15,18 @@ export default defineConfig(({ isSsrBuild }) => {
 		build: {
 			cssCodeSplit: false,
 			rolldownOptions: {
-				input: isSsrBuild ? 'src/index.ts' : ['src/islands-entry.tsx', 'src/css/index.ts'],
+				input: isSsrBuild
+					? 'src/index.ts'
+					: ['src/islands-entry.tsx', 'src/client-entry.ts', 'src/css/styles-entry.ts'],
 				external: ['bun'],
 				output: {
 					minify: isSsrBuild
 						? false
 						: {
-								compress: {
-									dropConsole: true
-								}
+							compress: {
+								dropConsole: true
 							}
+						}
 				}
 			},
 			outDir: isSsrBuild ? 'dist/server' : 'dist/client',
