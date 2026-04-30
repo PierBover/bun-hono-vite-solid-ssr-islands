@@ -1,10 +1,9 @@
 import { file } from 'bun';
 import { createMiddleware } from 'hono/factory';
 import { html, raw } from 'hono/html';
-import type { Component } from 'solid-js';
 import { createComponent, generateHydrationScript, renderToString } from 'solid-js/web';
 import type { Manifest, ViteDevServer } from 'vite';
-import { HomeContext, RequestContext, type RequestContextValue } from './pages/pages-contexts';
+import { RequestContext, type RequestContextValue } from './pages/pages-contexts';
 
 const isDev = import.meta.env.DEV;
 const isProd = import.meta.env.PROD;
@@ -55,7 +54,7 @@ export const renderSolidPage = createMiddleware(async (c, next) => {
 		const styleUrls: string[] = [];
 
 		if (isDev) {
-			const urls = await collectCssUrlsFromViteDevServer(c.env.vite, 'src/index.ts');
+			const urls = await collectCssUrlsFromViteDevServer(c.env.vite);
 			styleUrls.push(...urls);
 		} else {
 			// vite will always bundle all styles into this file
@@ -84,23 +83,14 @@ export const renderSolidPage = createMiddleware(async (c, next) => {
 	await next();
 });
 
-async function collectCssUrlsFromViteDevServer(viteServer: ViteDevServer, entryPath: string) {
+function collectCssUrlsFromViteDevServer(viteServer: ViteDevServer) {
 	const cssUrls = new Set<string>();
-	const module = await viteServer.moduleGraph.getModuleByUrl(entryPath);
 
-	if (!module) return cssUrls;
-
-	function walk(mod: any) {
-		mod.importedModules.forEach((submod: any) => {
-			if (submod.file?.endsWith('.css')) {
-				cssUrls.add(submod.url);
-			} else {
-				walk(submod);
-			}
-		});
+	for (const [url, mod] of viteServer.moduleGraph.urlToModuleMap) {
+		if (url.endsWith('.css')) {
+			cssUrls.add(url);
+		}
 	}
-
-	walk(module);
 
 	return cssUrls;
 }

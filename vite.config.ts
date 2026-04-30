@@ -12,6 +12,11 @@ export default defineConfig(({ isSsrBuild }) => {
 				adapter: bunAdapter
 			})
 		],
+		server: {
+			warmup: {
+				clientFiles: ['src/css/styles-entry.ts']
+			}
+		},
 		build: {
 			cssCodeSplit: false,
 			rolldownOptions: {

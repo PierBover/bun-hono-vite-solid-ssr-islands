@@ -5,13 +5,15 @@ import { renderSolidPage } from './middleware.tsx';
 import About from './pages/About.tsx';
 import Home from './pages/Home.tsx';
 import { HomeContext, type HomeContextValue } from './pages/pages-contexts.ts';
+// import './css/styles-entry';
 
 const isDev = import.meta.env.DEV;
 const isProd = import.meta.env.PROD;
 
-if (isDev) {
-	await import('./css/styles-entry.ts');
-}
+// if (isDev) {
+// 	// we need this to prevent a flash of unstyled content during dev
+// 	await import('./css/styles-entry.ts');
+// }
 
 const app = new Hono();
 

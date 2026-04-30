@@ -1,4 +1,5 @@
 /// <reference lib='dom' />
+import './css/styles-entry';
 
 function prefetchOnHover(anchorElement: HTMLAnchorElement): void {
 	anchorElement.addEventListener('mouseenter', () => {
