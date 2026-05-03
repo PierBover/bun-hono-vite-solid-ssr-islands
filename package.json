@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "bunx --bun vite",
     "build": "rm -rf dist && bunx --bun vite build && bunx --bun vite build --ssr",
-    "start": "NODE_ENV=production bun dist/server/index.js"
+    "start": "NODE_ENV=production bun dist/server/index.js",
+    "dprint": "bunx dprint fmt"
   },
   "devDependencies": {
     "@hono/vite-dev-server": "^0.25.1",
