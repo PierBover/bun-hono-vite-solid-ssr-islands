@@ -1,16 +1,20 @@
-import type { Context } from 'hono';
+import type {Context} from 'hono';
+import {useContext} from 'solid-js';
 import Nav from '../components/Nav';
+import {HonoContext} from './pages-contexts';
 
 function route(c: Context) {
-	const renderOptions = { title: 'About' };
+	const renderOptions = {title: 'About'};
 	return c.renderSolidPage(() => <About />, renderOptions);
 }
 
 function About() {
+	const {path} = useContext(HonoContext);
 	return (
 		<div class="About">
 			<Nav></Nav>
 			<h1>About</h1>
+			<h2>{path}</h2>
 			<p>
 				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas porttitor diam cursus ligula tristique
 				bibendum. Aliquam at erat quis tellus adipiscing tempus. Cras sed rutrum velit. Curabitur vel lacus eget erat

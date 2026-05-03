@@ -1,13 +1,13 @@
-import { type Context, createContext } from 'solid-js';
+import {type Context, createContext} from 'solid-js';
 
-export type RequestContextValue = {
+export type HonoContextValue = {
 	path: string;
 };
 
-export const RequestContext: Context<RequestContextValue> = createContext<RequestContextValue>({ path: '' });
+export const HonoContext: Context<HonoContextValue> = createContext<HonoContextValue>({path: ''});
 
 export type HomeContextValue = {
 	welcomeMessage: string;
 };
 
-export const HomeContext: Context<HomeContextValue> = createContext<HomeContextValue>({ welcomeMessage: '' });
+export const HomeContext: Context<HomeContextValue> = createContext<HomeContextValue>({welcomeMessage: ''});
