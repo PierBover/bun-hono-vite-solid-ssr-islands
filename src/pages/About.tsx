@@ -1,4 +1,10 @@
+import type { Context } from 'hono';
 import Nav from '../components/Nav';
+
+function route(c: Context) {
+	const renderOptions = { title: 'About' };
+	return c.renderSolidPage(() => <About />, renderOptions);
+}
 
 function About() {
 	return (
@@ -18,4 +24,4 @@ function About() {
 	);
 }
 
-export default About;
+export default route;

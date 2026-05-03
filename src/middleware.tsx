@@ -14,27 +14,19 @@ const viteManifestJson = viteManifest ? (JSON.parse(viteManifest) as Manifest) :
 const hydrationScript = generateHydrationScript();
 
 export const renderSolidPage = createMiddleware(async (c, next) => {
-	c.renderSolidPage = async (pageComponent, contextWithValue) => {
+	c.renderSolidPage = async (pageFunction, renderOptions) => {
+		const { title } = renderOptions;
+
 		// render the static HTML of the page with its context providers
 		const solidHtml = renderToString(() => {
-			const requestContextValue: RequestContextValue = {
+			const value: RequestContextValue = {
 				path: c.req.path
 			};
 
 			return createComponent(RequestContext.Provider, {
-				value: requestContextValue,
+				value: value,
 				get children() {
-					if (!contextWithValue) {
-						return createComponent(pageComponent, {});
-					} else {
-						const { context, value } = contextWithValue;
-						return createComponent(context.Provider, {
-							value,
-							get children() {
-								return createComponent(pageComponent, {});
-							}
-						});
-					}
+					return pageFunction();
 				}
 			});
 		});
@@ -63,6 +55,7 @@ export const renderSolidPage = createMiddleware(async (c, next) => {
 			styleUrls.push(manifestEntry!.file);
 		}
 
+		// dprint-ignore
 		return c.html(html`
 			<!DOCTYPE html>
 			<html>
@@ -72,10 +65,9 @@ export const renderSolidPage = createMiddleware(async (c, next) => {
 					${raw(clientEntry)}
 					${raw(styleUrls.map((url) => `<link href="${url}" rel="stylesheet"/>`).join(''))}
 					${isProd && raw(getJsPreloadTagsFromManifest())}
+					<title>${title}</title>
 				</head>
-				<body>
-					<div id="solid">${raw(solidHtml)}</div>
-				</body>
+				<body>${raw(solidHtml)}</body>
 			</html>
 		`);
 	};

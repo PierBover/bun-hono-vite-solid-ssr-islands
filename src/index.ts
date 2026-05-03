@@ -2,8 +2,8 @@ import { Hono } from 'hono';
 import { serveStatic } from 'hono/bun';
 import { compress } from 'hono/compress';
 import { renderSolidPage } from './middleware.tsx';
-import About from './pages/About.tsx';
-import Home from './pages/Home.tsx';
+import about from './pages/about.tsx';
+import home from './pages/home.tsx';
 import { HomeContext, type HomeContextValue } from './pages/pages-contexts.ts';
 
 const isDev = import.meta.env.DEV;
@@ -26,13 +26,7 @@ if (isProd) {
 	});
 }
 
-app.get('/', (c) => {
-	const contextValue: HomeContextValue = { welcomeMessage: 'Hello context' };
-	return c.renderSolidPage(Home, { context: HomeContext, value: contextValue });
-});
-
-app.get('/about', (c) => {
-	return c.renderSolidPage(About);
-});
+app.get('/', home);
+app.get('/about', about);
 
 export default app;

@@ -1,3 +1,4 @@
+import type { Context } from 'hono';
 import { useContext } from 'solid-js';
 import Nav from '../components/Nav';
 import { Island } from '../Island';
@@ -5,7 +6,18 @@ import Counter from '../islands/Counter';
 import CurrentTime from '../islands/CurrentTime';
 import Desktop from '../islands/Desktop';
 import Mobile from '../islands/Mobile';
-import { HomeContext } from './pages-contexts';
+import { HomeContext, type HomeContextValue } from './pages-contexts';
+
+function route(c: Context) {
+	const value: HomeContextValue = { welcomeMessage: 'Hello context' };
+	const renderOptions = { title: 'Home' };
+
+	return c.renderSolidPage(() => (
+		<HomeContext.Provider value={value}>
+			<Home />
+		</HomeContext.Provider>
+	), renderOptions);
+}
 
 function Home() {
 	const time = new Date().toISOString();
@@ -25,4 +37,4 @@ function Home() {
 	);
 }
 
-export default Home;
+export default route;
