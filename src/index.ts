@@ -1,10 +1,10 @@
-import { Hono } from 'hono';
-import { serveStatic } from 'hono/bun';
-import { compress } from 'hono/compress';
-import { renderSolidPage } from './middleware.tsx';
+import {Hono} from 'hono';
+import {serveStatic} from 'hono/bun';
+import {compress} from 'hono/compress';
+import {renderSolidPage} from './middleware.tsx';
 import about from './pages/about.tsx';
 import home from './pages/home.tsx';
-import { HomeContext, type HomeContextValue } from './pages/pages-contexts.ts';
+import {HomeContext, type HomeContextValue} from './pages/pages-contexts.ts';
 
 const isDev = import.meta.env.DEV;
 const isProd = import.meta.env.PROD;
@@ -15,7 +15,7 @@ app.use('*', renderSolidPage);
 
 if (isProd) {
 	app.use('*', compress());
-	app.use('/assets/*', serveStatic({ root: './dist/client' }));
+	app.use('/assets/*', serveStatic({root: './dist/client'}));
 
 	// add a short lived cache time for link preloads on mouseover
 	app.use(async (context, next) => {

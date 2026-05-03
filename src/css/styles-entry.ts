@@ -1,2 +1,2 @@
 import './index.css';
-import.meta.glob('./components/**/*.css', { eager: true });
+import.meta.glob('./components/**/*.css', {eager: true});

@@ -1,8 +1,8 @@
-import { useContext } from 'solid-js';
-import { RequestContext } from '../pages/pages-contexts';
+import {useContext} from 'solid-js';
+import {HonoContext} from '../pages/pages-contexts';
 
 function Nav() {
-	const { path } = useContext(RequestContext);
+	const {path} = useContext(HonoContext);
 
 	return (
 		<nav class="Nav">

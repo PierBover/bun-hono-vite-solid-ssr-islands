@@ -1,4 +1,4 @@
-import { createSignal } from 'solid-js';
+import {createSignal} from 'solid-js';
 
 function Counter() {
 	const [count, setCount] = createSignal(0);

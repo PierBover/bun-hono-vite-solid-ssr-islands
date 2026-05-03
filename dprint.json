@@ -5,7 +5,9 @@
     "quoteStyle": "preferSingle",
     "semiColons": "always",
     "trailingCommas": "never",
-    "jsx.quoteStyle": "preferDouble"
+    "jsx.quoteStyle": "preferDouble",
+    "spaceSurroundingProperties": false,
+    "importDeclaration.spaceSurroundingNamedImports": false
   },
   "excludes": [
     "**/node_modules",

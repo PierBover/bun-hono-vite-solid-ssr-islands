@@ -1,13 +1,13 @@
-import { stringify } from 'devalue';
-import { type Component } from 'solid-js';
-import { renderToString } from 'solid-js/web';
+import {stringify} from 'devalue';
+import {type Component} from 'solid-js';
+import {renderToString} from 'solid-js/web';
 
 // islands registry lookup table
 // we need this because we can't be certain of the component name after build
 // and we need that name to be able to provide a module path for hydration
 const registry = new Map<Component<any>, string>();
 // import and map all the modules of the islands components
-const modules = import.meta.glob('/src/islands/**/*.tsx', { eager: true });
+const modules = import.meta.glob('/src/islands/**/*.tsx', {eager: true});
 for (const [path, module] of Object.entries(modules)) {
 	if ((module as any).default) {
 		registry.set((module as any).default, path);
@@ -25,8 +25,8 @@ type CommonProps<T> = {
 };
 
 type HydrationOptions =
-	| { hydrateOnVisible?: boolean; hydrateOnMedia?: never; }
-	| { hydrateOnMedia?: string; hydrateOnVisible?: never; };
+	| {hydrateOnVisible?: boolean; hydrateOnMedia?: never;}
+	| {hydrateOnMedia?: string; hydrateOnVisible?: never;};
 
 type BaseProps<T> = CommonProps<T> & HydrationOptions;
 
@@ -35,7 +35,7 @@ type ComponentProps<T> = T extends (props: infer P) => any ? P : never;
 
 type IslandProps<T extends Component<any>> =
 	& BaseProps<T>
-	& (keyof ComponentProps<T> extends never ? { islandProps?: never; } : { islandProps: ComponentProps<T>; });
+	& (keyof ComponentProps<T> extends never ? {islandProps?: never;} : {islandProps: ComponentProps<T>;});
 
 export function Island<T extends Component<any>>(props: IslandProps<T>) {
 	const ComponentToRender = props.component;
@@ -46,7 +46,7 @@ export function Island<T extends Component<any>>(props: IslandProps<T>) {
 
 	if (!props.clientOnly) {
 		if (props.islandProps) {
-			solidHtml = renderToString(() => <ComponentToRender {...props.islandProps} />, { renderId });
+			solidHtml = renderToString(() => <ComponentToRender {...props.islandProps} />, {renderId});
 		} else {
 			solidHtml = renderToString(() => <ComponentToRender />, {
 				renderId

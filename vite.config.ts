@@ -1,12 +1,12 @@
 import devServer from '@hono/vite-dev-server';
 import bunAdapter from '@hono/vite-dev-server/bun';
-import { defineConfig } from 'vite';
+import {defineConfig} from 'vite';
 import solid from 'vite-plugin-solid';
 
-export default defineConfig(({ isSsrBuild }) => {
+export default defineConfig(({isSsrBuild}) => {
 	return {
 		plugins: [
-			solid({ ssr: true }),
+			solid({ssr: true}),
 			devServer({
 				entry: 'src/index.ts',
 				adapter: bunAdapter

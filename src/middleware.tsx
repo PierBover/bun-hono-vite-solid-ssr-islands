@@ -1,9 +1,9 @@
-import { file } from 'bun';
-import { createMiddleware } from 'hono/factory';
-import { html, raw } from 'hono/html';
-import { createComponent, generateHydrationScript, renderToString } from 'solid-js/web';
-import type { Manifest, ViteDevServer } from 'vite';
-import { RequestContext, type RequestContextValue } from './pages/pages-contexts';
+import {file} from 'bun';
+import {createMiddleware} from 'hono/factory';
+import {html, raw} from 'hono/html';
+import {createComponent, generateHydrationScript, renderToString} from 'solid-js/web';
+import type {Manifest, ViteDevServer} from 'vite';
+import {HonoContext, type HonoContextValue} from './pages/pages-contexts';
 
 const isDev = import.meta.env.DEV;
 const isProd = import.meta.env.PROD;
@@ -15,15 +15,15 @@ const hydrationScript = generateHydrationScript();
 
 export const renderSolidPage = createMiddleware(async (c, next) => {
 	c.renderSolidPage = async (pageFunction, renderOptions) => {
-		const { title } = renderOptions;
+		const {title} = renderOptions;
 
 		// render the static HTML of the page with its context providers
 		const solidHtml = renderToString(() => {
-			const value: RequestContextValue = {
+			const value: HonoContextValue = {
 				path: c.req.path
 			};
 
-			return createComponent(RequestContext.Provider, {
+			return createComponent(HonoContext.Provider, {
 				value: value,
 				get children() {
 					return pageFunction();

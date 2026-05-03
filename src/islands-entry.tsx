@@ -1,7 +1,7 @@
 /// <reference lib='dom' />
 
-import { parse } from 'devalue';
-import { hydrate, render } from 'solid-js/web';
+import {parse} from 'devalue';
+import {hydrate, render} from 'solid-js/web';
 
 const modules = import.meta.glob('/src/islands/**/*.tsx');
 
@@ -21,14 +21,14 @@ async function hydrateIsland(element: HTMLElement) {
 
 	if (importFunction) {
 		const clientOnly = element.getAttribute('data-client-only') === 'true';
-		const module = (await importFunction()) as { default: any; };
+		const module = (await importFunction()) as {default: any;};
 		const Component = module.default;
 		element.setAttribute('data-hydrated', 'true');
 
 		if (clientOnly) {
 			render(() => <Component {...props} />, element);
 		} else {
-			hydrate(() => <Component {...props} />, element, { renderId });
+			hydrate(() => <Component {...props} />, element, {renderId});
 		}
 	}
 }
